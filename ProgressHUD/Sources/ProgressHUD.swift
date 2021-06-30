@@ -134,6 +134,11 @@ public extension ProgressHUD {
 		get { shared.imageError }
 		set { shared.imageError = newValue }
 	}
+
+  class var delay: TimeInterval {
+    get { shared.delay }
+    set { shared.delay = newValue }
+  }
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------------------------
@@ -259,6 +264,7 @@ public class ProgressHUD: UIView {
 	private var fontStatus		= UIFont.boldSystemFont(ofSize: 24)
 	private var imageSuccess	= UIImage.checkmark.withTintColor(UIColor.systemGreen, renderingMode: .alwaysOriginal)
 	private var imageError		= UIImage.remove.withTintColor(UIColor.systemRed, renderingMode: .alwaysOriginal)
+  	private var delay           = TimeInterval(2)
 
 	private let keyboardWillShow	= UIResponder.keyboardWillShowNotification
 	private let keyboardWillHide	= UIResponder.keyboardWillHideNotification
@@ -312,8 +318,6 @@ public class ProgressHUD: UIView {
 		hudShow()
 
 		if (hide) {
-			let text = labelStatus?.text ?? ""
-			let delay = Double(text.count) * 0.03 + 1.25
 			timer = Timer.scheduledTimer(withTimeInterval: delay, repeats: false) { _ in
 				self.hudHide()
 			}
